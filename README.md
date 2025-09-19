@@ -23,9 +23,8 @@ Please explain the cool features of your program. Anything that you feel like yo
 ---------------------------------------------------------------------------
 Your directions on how to run the code. Make sure to be as thorough as possible!
 
-1.Go to my github repository named CS611.
-2.Filepath /CS611/CS611_hw/src/Main.java to start and run the game.
-3.Related UML graphs are also in /CS611/CS611_hw.
+1.Access my GitHub repository named CS611_project.
+2.Filepath /src/Main.java to start and run the game.
 
 ## Input/Output Example
 ---------------------------------------------------------------------------
@@ -73,7 +72,7 @@ Output:
 +--+--+
 |3| |
 +--+--+
-Congratulations !!!
+!!!  Congratulations  !!!
 Goodbye!
 
    ```

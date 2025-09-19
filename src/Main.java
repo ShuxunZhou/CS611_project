@@ -2,8 +2,8 @@ import java.util.*;
 
 public class Main {
 
-    // 打印棋盘
-    // 棋盘采用一维数组 idx = r * cols + c
+    // Print the board
+    // The board uses a one-dimensional array: board[] in which idx = r * cols + c
     static String repeat(String plus, int cols, int formWidth){
         String result = "";
         for(int i = 0; i < cols; i++){
@@ -17,13 +17,13 @@ public class Main {
 
     static void printBoard(int[] board, int rows, int cols){
         int max = rows * cols - 1;
-        int width = String.valueOf(max).length(); //取max的最大位数，为了保证打印出的格子不歪
+        int width = String.valueOf(max).length(); //Take the number of digits of the largest number，to ensure each grid is neat
         String line = repeat("+", cols, width + 1) + "+";
         for(int r = 0; r < rows; r++){
             System.out.println(line);
             for(int c = 0; c < cols; c++){
                 int v = board[r * cols + c];
-                String cell = (v == 0 ? " " : String.valueOf(v)); //打印当前格子中的内容
+                String cell = (v == 0 ? " " : String.valueOf(v)); //Print the values of current grid
                 System.out.printf("|%" + width + "s" , cell);
             }
             System.out.println("|");
@@ -31,7 +31,7 @@ public class Main {
         System.out.println(line);
     }
 
-    // 移动规则：输入一个数字，如果他与空格相邻，则与空格交换
+    // Movement rules: Input a digit, if it is adjacent to a space, then swap it with the space.
     static boolean move(int[] board, int rows, int cols, int num){
         int idx = -1;
         int empty = -1;
@@ -43,7 +43,7 @@ public class Main {
 
         int r1 = idx / cols, c1 = idx % cols;
         int r2 = empty / cols, c2 = empty % cols;
-        if(Math.abs(r1 - r2) + Math.abs(c1 - c2) == 1){ //说明此时目标格与空格相邻
+        if(Math.abs(r1 - r2) + Math.abs(c1 - c2) == 1){ // It means the grid is adjacent to a space.
             board[empty] = board[idx];
             board[idx] = 0;
             return true;
@@ -51,7 +51,7 @@ public class Main {
         return false;
     }
 
-    // 胜利判定（是否已解）
+    // Determine whether the game is solved.
     static boolean isSolved(int[] board) {
         for (int i = 0; i < board.length - 1; i++) {
             if (board[i] != i + 1) return false;
@@ -60,12 +60,12 @@ public class Main {
     }
 
 
-    // 随机打乱，直到生成一个可解的局面
+    // Randomly shuffle until a solvable situation is generated.
     /*
-        如何保证随机生成的棋盘是可解的？
-            v(反序数,注意非零)       k(空格自底行号)
-            1. 当cols为奇数，inv为偶数 = 可解
-            2. 当cols为偶数，(inv + k)为奇数 = 可解
+        How to promise the random board is solvable ？
+            v(Reverse ordinal number, not include 0)       k(Blank row from bottom)
+            1. When cols is odd, inv is even ---> Solvable
+            2. When cols is even, (inv + k) is odd ---> Solvable
      */
     static boolean isSolvable(int[] board, int rows, int cols){
         int inv = 0;
@@ -76,8 +76,8 @@ public class Main {
                 if(board[i] > board[j]) inv++;
             }
         }
-        // 计算空格从最底下一行数，在第几行（最底层为1）
-        int k = rows - (indexOf(board, 0) / cols);
+        // Calculate k（the last row is 1）
+        int k = rows - (getIndex(board, 0) / cols);
         if(cols % 2 != 0 ){
             return inv % 2 == 0;
         }else{
@@ -98,14 +98,14 @@ public class Main {
         } while (!isSolvable(board, rows, cols) || isSolved(board));
     }
 
-    static int indexOf(int[] arr, int index){
+    static int getIndex(int[] arr, int index){
         for(int i = 0; i < arr.length; i++){
             if(arr[i] == index) return i;
         }
         return -1;
     }
 
-    // 主函数，运行游戏
+    // main function, start game !
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
         System.out.println("=== Welcome to Sliding Puzzle Game ===");
@@ -120,7 +120,7 @@ public class Main {
         while(true){
             printBoard(board, rows, cols);
             if(isSolved(board)) {
-                System.out.println("Congratulations !!!");
+                System.out.println("!!!  Congratulations  !!!");
                 break;
             }
             System.out.println("Please choose to continue or quit (c=continue, q=quit)");
